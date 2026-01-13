@@ -49,6 +49,20 @@ body {
     font-weight: bold;
 }
 
+.menu .back-btn-menu {
+    display: block;
+    width: 50%;
+    margin: 20px auto;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    background-color: #ff8c00;
+    color: white;
+    cursor: pointer;
+}
+
 #order-screen {
     display: none;
     padding: 20px;
@@ -203,6 +217,14 @@ function openMenu(menu){
     currentMenu = menu==='layali'? layaliItems : sabirawiItems;
 
     menuDiv.innerHTML='';
+    
+    // زر رجوع لكل قائمة
+    const backBtn = document.createElement('button');
+    backBtn.textContent='⬅️ رجوع';
+    backBtn.className='back-btn-menu';
+    backBtn.onclick=()=>{menuDiv.style.display='none'; document.getElementById('home').style.display='block';};
+    menuDiv.appendChild(backBtn);
+
     currentMenu.forEach(item=>{
         const btn=document.createElement('button');
         btn.textContent=item.name;
