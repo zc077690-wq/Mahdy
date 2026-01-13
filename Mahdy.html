@@ -7,19 +7,128 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
 
-body { margin:0; font-family:'Amiri', serif; background:linear-gradient(to bottom,#87ceeb,#00bfff); text-align:center;}
-.section{margin:20px; padding:30px; background:#ffa500; border-radius:20px; font-size:32px; font-weight:bold; cursor:pointer; transition:0.3s;}
-.section:hover{transform:scale(1.05);}
-.menu, #order-screen, #final-order-screen, #daily-orders{display:none; padding:20px;}
-.menu button, #add-to-cart-btn, #send-order-btn, .back-btn, #erase-btn{display:block; width:80%; margin:10px auto; padding:15px; font-size:22px; border-radius:10px; border:none; cursor:pointer; font-weight:bold;}
-.menu button{background:#ffa500; color:black;}
-#add-to-cart-btn{background:#00bfff; color:white;}
-#send-order-btn{background:#32cd32; color:white;}
-.back-btn{background:#ffa500; color:black; font-size:24px;}
-#erase-btn{background:red; color:white;}
-table{width:90%; margin:10px auto; border-collapse:collapse; font-size:20px;}
-th, td{border:1px solid #000; padding:10px;}
-th{background:#ffa500;}
+body {
+    margin: 0;
+    font-family: 'Amiri', serif;
+    background: linear-gradient(to bottom, #87ceeb, #00bfff);
+    text-align: center;
+}
+
+.section {
+    margin: 20px;
+    padding: 30px;
+    background-color: #ffa500;
+    border-radius: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.section:hover {
+    transform: scale(1.05);
+}
+
+.menu {
+    display: none;
+    padding: 20px;
+}
+
+.menu button {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 20px;
+    font-size: 28px;
+    font-family: 'Amiri', serif;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    background-color: #ffa500;
+    color: #000;
+    font-weight: bold;
+}
+
+#order-screen {
+    display: none;
+    padding: 20px;
+}
+
+#order-screen h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+#order-price {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+#order-quantity {
+    width: 80px;
+    font-size: 22px;
+    text-align: center;
+    margin-left: 10px;
+}
+
+#place-order-btn {
+    display: block;
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    font-size: 28px;
+    background-color: #ffa500;
+    border: none;
+    border-radius: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.back-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    background-color: #ffa500;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#daily-orders {
+    display: none;
+    padding: 20px;
+    text-align: center;
+}
+
+#daily-orders table {
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+#daily-orders th, #daily-orders td {
+    border: 1px solid #000;
+    padding: 10px;
+}
+
+#daily-orders th {
+    background-color: #ffa500;
+}
+
+#erase-btn {
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 22px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -30,182 +139,189 @@ th{background:#ffa500;}
     <button class="section" onclick="askPassword()">عرض الطلبات اليومية</button>
 </div>
 
-<div id="layali-menu" class="menu"></div>
-<div id="sabirawi-menu" class="menu"></div>
+<div id="layali-menu" class="menu">
+    <button class="back-btn" onclick="backToHome()">رجوع</button>
+</div>
+<div id="sabirawi-menu" class="menu">
+    <button class="back-btn" onclick="backToHome()">رجوع</button>
+</div>
 
 <div id="order-screen">
     <h2 id="order-title"></h2>
     <p id="order-price"></p>
     <label>الكمية: <input type="number" id="order-quantity" value="1" min="1"></label><br>
-    <button id="add-to-cart-btn">أضف للسلة</button>
+    <button id="place-order-btn">اضغط للطلب</button>
     <button class="back-btn" onclick="backToMenu()">رجوع</button>
-</div>
-
-<div id="final-order-screen">
-    <h2>طلبك النهائي</h2>
-    <table>
-        <thead><tr><th>الطلب</th><th>السعر</th><th>الكمية</th><th>المجموع</th></tr></thead>
-        <tbody id="final-orders-body"></tbody>
-    </table>
-    <h3 id="total-final"></h3>
-    <button id="send-order-btn" onclick="sendOrder()">أرسل الطلب النهائي</button>
-    <button class="back-btn" onclick="backToHomeFromFinal()">رجوع</button>
 </div>
 
 <div id="daily-orders">
     <h2>الطلبات اليومية</h2>
+
+    <h3>مطعم ليالي الفرات</h3>
     <table>
-        <thead><tr><th>الطلب</th><th>السعر</th><th>الكمية</th><th>المجموع</th></tr></thead>
-        <tbody id="orders-table-body"></tbody>
+        <thead>
+            <tr><th>الطلب</th><th>السعر</th><th>الكمية</th><th>المجموع</th></tr>
+        </thead>
+        <tbody id="layali-orders"></tbody>
     </table>
+
+    <h3>مطعم الصبيراوي</h3>
+    <table>
+        <thead>
+            <tr><th>الطلب</th><th>السعر</th><th>الكمية</th><th>المجموع</th></tr>
+        </thead>
+        <tbody id="sabirawi-orders"></tbody>
+    </table>
+
     <h3 id="total-income"></h3>
     <button id="erase-btn" onclick="eraseOrders()">مسح الطلبات</button>
     <button class="back-btn" onclick="backToHomeFromOrders()">رجوع</button>
 </div>
 
 <script>
-const layaliItems=[
-{name:'سمك مسكوف', price:15000},
-{name:'صينية مندي لحم', price:16000},
-{name:'نفر مندي لحم', price:8000},
-{name:'دجاجة مندي صينيتين', price:20000},
-{name:'صينية نص دجاجة مندي', price:10000},
-{name:'نفر مندي دجاج', price:5000},
-{name:'كيلو كباب', price:20000},
-{name:'نص كيلو كباب', price:10000},
-{name:'نفر كباب', price:5000},
-{name:'نص نفر كباب', price:3500},
+// الأصناف
+const layaliItems = [
+    {name:'سمك مسكوف', price:15000},
+    {name:'صينية مندي لحم', price:16000},
+    {name:'نفر مندي لحم', price:8000},
+    {name:'دجاجة مندي صينيتين', price:20000},
+    {name:'صينية نص دجاجة مندي', price:10000},
+    {name:'نفر مندي دجاج', price:5000},
+    {name:'كيلو كباب', price:20000},
+    {name:'نص كيلو كباب', price:10000},
+    {name:'نفر كباب', price:5000},
+    {name:'نص نفر كباب', price:3500},
 ];
 
-const sabirawiItems=[
-{name:'بيتزا كبير', price:8000},
-{name:'بيتزا وسط', price:6000},
-{name:'بيتزا صغير', price:3000},
-{name:'بركر دبل', price:2000},
-{name:'بركر عادي', price:1000},
-{name:'صاج دجاج', price:2000},
-{name:'صاج فلافل', price:1000},
-{name:'وجبة صاج دجاج', price:3000},
-{name:'وجبة صاج فلافل', price:2000},
-{name:'وجبة كنتاكي', price:7000},
-{name:'نص وجبة كنتاكي', price:3500},
-{name:'ريزو', price:3000},
-{name:'لفة كص دجاج', price:1000},
+const sabirawiItems = [
+    {name:'بيتزا كبير', price:8000},
+    {name:'بيتزا وسط', price:6000},
+    {name:'بيتزا صغير', price:3000},
+    {name:'بركر دبل', price:2000},
+    {name:'بركر عادي', price:1000},
+    {name:'صاج دجاج', price:2000},
+    {name:'صاج فلافل', price:1000},
+    {name:'وجبة صاج دجاج', price:3000},
+    {name:'وجبة صاج فلافل', price:2000},
+    {name:'وجبة كنتاكي', price:7000},
+    {name:'نص وجبة كنتاكي', price:3500},
+    {name:'ريزو', price:3000},
+    {name:'لفة كص دجاج', price:1000},
 ];
 
-let currentMenu=[];
-let finalOrder=[];
-let orders=JSON.parse(localStorage.getItem('orders'))||[];
+let currentMenu = [];
+let orders = JSON.parse(localStorage.getItem('orders')) || [];
 
+// فتح قائمة
 function openMenu(menu){
     document.getElementById('home').style.display='none';
-    currentMenu=menu==='layali'? layaliItems : sabirawiItems;
-    const menuDiv=menu==='layali'? document.getElementById('layali-menu'):document.getElementById('sabirawi-menu');
-    menuDiv.innerHTML='<button class="back-btn" onclick="backToHome()">رجوع</button>';
+    const menuDiv = menu==='layali'? document.getElementById('layali-menu') : document.getElementById('sabirawi-menu');
+    currentMenu = menu==='layali'? layaliItems : sabirawiItems;
+
+    // إزالة أي أزرار قديمة عدا زر الرجوع
+    menuDiv.querySelectorAll('button:not(.back-btn)').forEach(b=>b.remove());
+
     currentMenu.forEach(item=>{
         const btn=document.createElement('button');
         btn.textContent=item.name;
-        btn.onclick=()=>showOrder(item);
+        btn.onclick=()=>showOrder(item, menu);
         menuDiv.appendChild(btn);
     });
     menuDiv.style.display='block';
 }
 
-function showOrder(item){
+// شاشة الطلب
+function showOrder(item, menuName){
     document.getElementById('layali-menu').style.display='none';
     document.getElementById('sabirawi-menu').style.display='none';
     document.getElementById('order-screen').style.display='block';
+
     document.getElementById('order-title').textContent=item.name;
     document.getElementById('order-price').textContent='السعر: '+item.price+' دينار';
     document.getElementById('order-quantity').value=1;
 
-    document.getElementById('add-to-cart-btn').onclick=()=>{
+    document.getElementById('place-order-btn').onclick=()=>{
         const qty=parseInt(document.getElementById('order-quantity').value);
         const total=item.price*qty;
-        finalOrder.push({name:item.name, price:item.price, qty:qty, total:total});
-        alert(`${item.name} تمت إضافته للسلة`);
-        showFinalOrder(); // تعرض الطلب النهائي بعد كل إضافة
+
+        orders.push({name:item.name, price:item.price, qty:qty, total:total, menu: menuName});
+        localStorage.setItem('orders', JSON.stringify(orders));
+
+        // إرسال الطلب للواتساب مباشرة
+        const message=`${item.name} x${qty} = ${total} دينار`;
+        const url=`https://wa.me/+9647885699227?text=${encodeURIComponent(message)}`;
+        window.open(url,'_blank');
+
+        backToMenu();
     };
 }
 
+// العودة للقائمة
 function backToMenu(){
     document.getElementById('order-screen').style.display='none';
-    if(currentMenu===layaliItems){ document.getElementById('layali-menu').style.display='block'; }
-    else{ document.getElementById('sabirawi-menu').style.display='block'; }
+    if(currentMenu===layaliItems){
+        document.getElementById('layali-menu').style.display='block';
+    } else {
+        document.getElementById('sabirawi-menu').style.display='block';
+    }
 }
 
 function backToHome(){
     document.getElementById('layali-menu').style.display='none';
     document.getElementById('sabirawi-menu').style.display='none';
-    document.getElementById('order-screen').style.display='none';
-    document.getElementById('final-order-screen').style.display='none';
     document.getElementById('home').style.display='block';
 }
 
-function showFinalOrder(){
-    document.getElementById('order-screen').style.display='none';
-    document.getElementById('layali-menu').style.display='none';
-    document.getElementById('sabirawi-menu').style.display='none';
-    const tbody=document.getElementById('final-orders-body');
-    tbody.innerHTML='';
-    let total=0;
-    finalOrder.forEach(o=>{
-        const tr=document.createElement('tr');
-        tr.innerHTML=`<td>${o.name}</td><td>${o.price}</td><td>${o.qty}</td><td>${o.total}</td>`;
-        tbody.appendChild(tr);
-        total+=o.total;
-    });
-    document.getElementById('total-final').textContent='المجموع الكلي: '+total+' دينار';
-    document.getElementById('final-order-screen').style.display='block';
-}
-
-function sendOrder(){
-    if(finalOrder.length===0){ alert("لا يوجد طلبات"); return; }
-    let message='';
-    finalOrder.forEach(o=>{ message+=`${o.name} x${o.qty} = ${o.total} دينار\n`; });
-    const url=`https://wa.me/+9647885699227?text=${encodeURIComponent(message)}`;
-    window.open(url,'_blank');
-    finalOrder=[];
-    backToHome();
-}
-
+// كلمة المرور لعرض الطلبات اليومية
 function askPassword(){
-    const pass=prompt("أدخل الرمز السري:");
-    if(pass==='098123'){ showDailyOrders(); }
-    else{ alert("رمز خاطئ!"); }
-}
-
-function showDailyOrders(){
-    document.getElementById('home').style.display='none';
-    document.getElementById('layali-menu').style.display='none';
-    document.getElementById('sabirawi-menu').style.display='none';
-    document.getElementById('order-screen').style.display='none';
-    document.getElementById('final-order-screen').style.display='none';
-    document.getElementById('daily-orders').style.display='block';
-
-    const tbody=document.getElementById('orders-table-body');
-    tbody.innerHTML='';
-    let totalIncome=0;
-    orders.forEach(o=>{
-        const tr=document.createElement('tr');
-        tr.innerHTML=`<td>${o.name}</td><td>${o.price}</td><td>${o.qty}</td><td>${o.total}</td>`;
-        tbody.appendChild(tr);
-        totalIncome+=o.total;
-    });
-    document.getElementById('total-income').textContent='المجموع الكلي: '+totalIncome+' دينار';
-}
-
-function eraseOrders(){
-    if(confirm("هل تريد مسح كل الطلبات؟")){
-        orders=[];
-        localStorage.removeItem('orders');
+    const pass = prompt("أدخل الرمز السري:");
+    if(pass==='098123'){
         showDailyOrders();
+    } else {
+        alert("رمز خاطئ!");
     }
 }
 
-function backToHomeFromOrders(){ document.getElementById('daily-orders').style.display='none'; backToHome(); }
-function backToHomeFromFinal(){ document.getElementById('final-order-screen').style.display='none'; backToHome(); }
+// عرض الطلبات اليومية
+function showDailyOrders(){
+    document.getElementById('home').style.display='none';
+    updateDailyOrders();
+    document.getElementById('daily-orders').style.display='block';
+}
 
+// تحديث الطلبات اليومية
+function updateDailyOrders(){
+    const layaliBody = document.getElementById('layali-orders');
+    const sabirawiBody = document.getElementById('sabirawi-orders');
+    layaliBody.innerHTML='';
+    sabirawiBody.innerHTML='';
+
+    let totalIncome=0;
+    orders.forEach(o=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML=`<td>${o.name}</td><td>${o.price}</td><td>${o.qty}</td><td>${o.total}</td>`;
+        totalIncome += o.total;
+        if(o.menu==='layali') layaliBody.appendChild(tr);
+        else sabirawiBody.appendChild(tr);
+    });
+
+    document.getElementById('total-income').textContent='المجموع الكلي: '+totalIncome+' دينار';
+}
+
+// مسح الطلبات
+function eraseOrders(){
+    if(confirm("هل تريد مسح كل الطلبات؟")){
+        orders = [];
+        localStorage.removeItem('orders');
+        updateDailyOrders();
+    }
+}
+
+function backToHomeFromOrders(){
+    document.getElementById('daily-orders').style.display='none';
+    document.getElementById('home').style.display='block';
+}
 </script>
+
 </body>
 </html>
