@@ -218,7 +218,6 @@ function openMenu(menu){
     const menuDiv = menu==='layali'? document.getElementById('layali-menu') : document.getElementById('sabirawi-menu');
     currentMenu = menu==='layali'? layaliItems : sabirawiItems;
 
-    // إزالة أي أزرار قديمة عدا زر الرجوع
     menuDiv.querySelectorAll('button:not(.back-btn)').forEach(b=>b.remove());
 
     currentMenu.forEach(item=>{
@@ -247,9 +246,9 @@ function showOrder(item, menuName){
         orders.push({name:item.name, price:item.price, qty:qty, total:total, menu: menuName});
         localStorage.setItem('orders', JSON.stringify(orders));
 
-        // إرسال الطلب للواتساب مباشرة
+        // ✅ الرقم الجديد للواتساب
         const message=`${item.name} x${qty} = ${total} دينار`;
-        const url=`https://wa.me/+9647885699227?text=${encodeURIComponent(message)}`;
+        const url=`https://wa.me/+9647732438998?text=${encodeURIComponent(message)}`;
         window.open(url,'_blank');
 
         backToMenu();
@@ -272,7 +271,7 @@ function backToHome(){
     document.getElementById('home').style.display='block';
 }
 
-// كلمة المرور لعرض الطلبات اليومية
+// كلمة المرور
 function askPassword(){
     const pass = prompt("أدخل الرمز السري:");
     if(pass==='098123'){
@@ -282,14 +281,12 @@ function askPassword(){
     }
 }
 
-// عرض الطلبات اليومية
 function showDailyOrders(){
     document.getElementById('home').style.display='none';
     updateDailyOrders();
     document.getElementById('daily-orders').style.display='block';
 }
 
-// تحديث الطلبات اليومية
 function updateDailyOrders(){
     const layaliBody = document.getElementById('layali-orders');
     const sabirawiBody = document.getElementById('sabirawi-orders');
@@ -308,7 +305,6 @@ function updateDailyOrders(){
     document.getElementById('total-income').textContent='المجموع الكلي: '+totalIncome+' دينار';
 }
 
-// مسح الطلبات
 function eraseOrders(){
     if(confirm("هل تريد مسح كل الطلبات؟")){
         orders = [];
